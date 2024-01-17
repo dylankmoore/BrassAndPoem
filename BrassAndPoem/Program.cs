@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.Design;
+
 string greeting = @"Welcome to Brass & Poem! We sell a unique selection of poetry and brass musical instruments.";
 
 List<Product> product = new()
@@ -65,19 +67,22 @@ while (choice !="5")
             DisplayAllProducts(product, productTypes );
             break;
         case "2":
-            Console.WriteLine("\n Delete a product:");
+            Console.WriteLine("\nEnter the number of the product you wish to delete:");
             DeleteProduct(product, productTypes);
             break;
         case "3":
-            Console.WriteLine("\n Add a product:");
+            Console.WriteLine("\nAdd a product:");
             AddProduct(product, productTypes);
             break;
         case "4":
-            Console.WriteLine(" \n Update a product:");
+            Console.WriteLine("\nUpdate a product:");
             UpdateProduct(product, productTypes);
             break;
         case "5":
-            Console.WriteLine("\n Thank you, Goodbye!");
+            Console.WriteLine("\nThank you, Goodbye!");
+            break;
+        default:
+            Console.WriteLine("\nInvalid selection. Please enter a number between 1-5.");
             break;
     }
 }
@@ -97,6 +102,10 @@ void DisplayMenu()
 void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
 {
     Console.WriteLine("\n");
+    if (products.Count == 0)
+    {
+        Console.WriteLine("Sorry, There are no products at this time.");
+    }
     //loop through each product in the list
     for (int i = 0; i < products.Count; i++)
     {
@@ -107,12 +116,34 @@ void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
     }
 }
 
+//delete a product
 void DeleteProduct(List<Product> products, List<ProductType> productTypes)
 {
-    throw new NotImplementedException();
+    while (true)
+    {
+        DisplayAllProducts(products, productTypes);
+
+        if (int.TryParse(Console.ReadLine(), out int choiceIndex))
+        {
+            if (choiceIndex == 0)
+            {
+                break;
+            }
+            else if (choiceIndex >= 1 && choiceIndex <= products.Count)
+            {
+                products.RemoveAt(choiceIndex - 1);
+                Console.WriteLine("\nYou have successfully deleted this product.");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("\nError: Invalid Selection. Please enter a valid number (1-5) or 0 to see the main menu.");
+            }
+        }
+    }
 }
 
-void AddProduct(List<Product> products, List<ProductType> productTypes)
+    void AddProduct(List<Product> products, List<ProductType> productTypes)
 {
     throw new NotImplementedException();
 }
