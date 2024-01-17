@@ -39,7 +39,7 @@ List<ProductType> productTypes = new()
 {
     new ProductType()
     {
-        Title = "Brass Instruments",
+        Title = "Brass Instrument",
         Id = 1,
 
     },
@@ -52,7 +52,6 @@ List<ProductType> productTypes = new()
 };
 
 Console.WriteLine(greeting);
-Console.WriteLine("\n");
 
 string choice = null;
 while (choice !="5")
@@ -62,29 +61,30 @@ while (choice !="5")
     switch (choice)
     {
         case "1":
-            Console.WriteLine(@"A list of all of our plants:");
-            DisplayAllProducts(product, productTypes);
+            Console.WriteLine("\n A list of all of our products:");
+            DisplayAllProducts(product, productTypes );
             break;
         case "2":
-            Console.WriteLine(@"Add a plant to inventory!");
+            Console.WriteLine("\n Delete a product:");
             DeleteProduct(product, productTypes);
             break;
         case "3":
-            Console.WriteLine(@"Adopt a plant!");
+            Console.WriteLine("\n Add a product:");
             AddProduct(product, productTypes);
             break;
         case "4":
-            Console.WriteLine(@"Delist a plant");
+            Console.WriteLine(" \n Update a product:");
             UpdateProduct(product, productTypes);
             break;
         case "5":
-            Console.WriteLine(@"Thank you, Goodbye!");
+            Console.WriteLine("\n Thank you, Goodbye!");
             break;
     }
 }
 
 void DisplayMenu()
 {
+    Console.WriteLine("\n");
     Console.WriteLine(@"Choose from the main menu:
 1. Display all products
 2. Delete a product
@@ -93,9 +93,18 @@ void DisplayMenu()
 5. Exit");
 }
 
+//display all products
 void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
 {
-    throw new NotImplementedException();
+    Console.WriteLine("\n");
+    //loop through each product in the list
+    for (int i = 0; i < products.Count; i++)
+    {
+        //FirstOrDefault is the Linq method used to find the first or default (product type)
+        Product product = products[i];
+        ProductType productType = productTypes.FirstOrDefault(prodType => prodType.Id == product.ProductTypeId);
+        Console.WriteLine($"{i + 1}. {product.Name}, {productType.Title}\n{product.Price}\n");
+    }
 }
 
 void DeleteProduct(List<Product> products, List<ProductType> productTypes)
