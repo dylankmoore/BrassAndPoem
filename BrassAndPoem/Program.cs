@@ -35,7 +35,7 @@ List<Product> product = new()
     }
 };
 
-List<ProductType> producttypes = new()
+List<ProductType> productTypes = new()
 {
     new ProductType()
     {
@@ -52,22 +52,45 @@ List<ProductType> producttypes = new()
 };
 
 Console.WriteLine(greeting);
+Console.WriteLine("\n");
 
 string choice = null;
-while (choice !="0")
+while (choice !="5")
+{
+    DisplayMenu();
+    choice = Console.ReadLine();
+    switch (choice)
+    {
+        case "1":
+            Console.WriteLine(@"A list of all of our plants:");
+            DisplayAllProducts(product, productTypes);
+            break;
+        case "2":
+            Console.WriteLine(@"Add a plant to inventory!");
+            DeleteProduct(product, productTypes);
+            break;
+        case "3":
+            Console.WriteLine(@"Adopt a plant!");
+            AddProduct(product, productTypes);
+            break;
+        case "4":
+            Console.WriteLine(@"Delist a plant");
+            UpdateProduct(product, productTypes);
+            break;
+        case "5":
+            Console.WriteLine(@"Thank you, Goodbye!");
+            break;
+    }
+}
+
+void DisplayMenu()
 {
     Console.WriteLine(@"Choose from the main menu:
 1. Display all products
 2. Delete a product
 3. Add a new product
 4. Update product properties
-5. Exit
-");
-}
-
-void DisplayMenu()
-{
-    throw new NotImplementedException();
+5. Exit");
 }
 
 void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
