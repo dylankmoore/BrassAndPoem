@@ -141,7 +141,8 @@ void DeleteProduct(List<Product> products, List<ProductType> productTypes)
     }
 }
 
-    void AddProduct(List<Product> products, List<ProductType> productTypes)
+//add product
+void AddProduct(List<Product> products, List<ProductType> productTypes)
 {
     try
     {
@@ -202,10 +203,70 @@ void DeleteProduct(List<Product> products, List<ProductType> productTypes)
     }
 }
 
+//update product
 void UpdateProduct(List<Product> products, List<ProductType> productTypes)
 {
-    throw new NotImplementedException();
+    Console.WriteLine("\nWhich product would you like to update?");
+    DisplayAllProducts(products, productTypes);
+
+    if (int.TryParse(Console.ReadLine(), out int userInput))
+    {
+        int chosenProductIndex = userInput - 1;
+
+        if (chosenProductIndex >= 0 && chosenProductIndex < products.Count)
+        {
+            Product chosenProduct = products[chosenProductIndex];
+
+            Console.WriteLine($"\nUpdating {chosenProduct.Name}...");
+
+            Console.WriteLine("\nEnter the updated product name:");
+            string updatedProductName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(updatedProductName))
+            {
+                chosenProduct.Name = updatedProductName;
+            }
+            else
+            {
+                Console.WriteLine("\nError: Product name cannot be blank. Returning to main menu.\n");
+                return;
+            }
+
+            Console.WriteLine("\nEnter the updated product price:");
+            string updatedPriceInput = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(updatedPriceInput) && decimal.TryParse(updatedPriceInput, out decimal updatedProductPrice))
+            {
+                chosenProduct.Price = updatedProductPrice;
+            }
+            else
+            {
+                Console.WriteLine("\nError: Product price cannot be blank. Returning to main menu.\n");
+                return;
+            }
+
+            Console.WriteLine("\nEnter the updated product type: \n(enter 1 or 2)");
+            for (int i = 0; i < productTypes.Count; i++)
+            {
+                Console.WriteLine($"\n{productTypes[i].Id}. {productTypes[i].Title}\n");
+            }
+
+            if (int.TryParse(Console.ReadLine(), out int updatedProductType))
+            {
+                if (updatedProductType >= 1 && updatedProductType <= productTypes.Count)
+                {
+                    chosenProduct.ProductTypeId = updatedProductType;
+                    Console.WriteLine($"\nCongratulations! You have successfully updated {updatedProductName}.");
+                }
+                else
+                {
+                    Console.WriteLine("\nInvalid product type input. Product type has not been changed.\n");
+                }
+            }
+        }
+    }
 }
+
+
+
 
 // don't move or change this!
 public partial class Program { }
